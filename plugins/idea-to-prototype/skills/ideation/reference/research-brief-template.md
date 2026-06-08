@@ -7,6 +7,7 @@
 
 ## Target user
 *A named, specific person or role (not a category). The real consequence they face if this problem isn't solved.*
+*If this persona was co-created in the session because no real person was named, mark it **(provisional — not yet validated)** — and finding real matches becomes part of the validation assignment below.*
 
 ## Problem & status quo
 *The problem in one or two sentences. What the user does today to cope (even badly), and what that workaround costs them (time, money, frustration).*
@@ -21,16 +22,22 @@
 *The smallest version that delivers real value and is buildable in the workshop's build sessions.*
 
 ## Landscape
-*3 real existing solutions (verified, not invented) and your one-sentence differentiator.*
+*3 source-backed leads from web search — confirm current details before relying on them. Include a URL for each.*
 
-1. **{{competitor}}** — {{what it does / gap}}
-2. **{{competitor}}** — {{what it does / gap}}
-3. **{{competitor}}** — {{what it does / gap}}
+1. **{{competitor}}** ({{url}}) — {{what it does / gap}}
+2. **{{competitor}}** ({{url}}) — {{what it does / gap}}
+3. **{{competitor}}** ({{url}}) — {{what it does / gap}}
 
 **Differentiator:** *{{one sentence}}*
 
 ## Riskiest assumption
 *The one belief that, if wrong, sinks this idea. This is what you'll test before Session 2.*
+
+## Next validation assignment
+*Before Session 2, get one real-world signal on the riskiest assumption.*
+- **Who to ask:** *2 real people matching the target user (if the persona is provisional, finding them is part of this)*
+- **What to test:** *the riskiest assumption, phrased as a question you can actually put to them*
+- **Signal that confirms / kills it:** *what answer would validate it — and what answer would sink it*
 
 ---
 *Optional unlocks completed: {{A premise challenge / B eureka / C second opinion / D alternative directions, or "none"}}*

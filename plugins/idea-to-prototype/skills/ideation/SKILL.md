@@ -34,7 +34,7 @@ You are running inside a 90-minute workshop. The participant is an adult profess
 For each question: if the answer is vague, name *why* it's vague and ask again. **Push at most twice per question (the counter resets each question)**, then accept the best answer you have and move on. Never deadlock — this is a timed session.
 
 Two exceptions where you must NOT just "accept and move on":
-- **Named user (Stage 3):** if after two pushes you still have a category, do not accept it. Co-create a concrete named persona from their answers ("Let's pin this to one person — a solo freelance designer with 5 clients, call her Priya. Object if that's wrong.") and confirm. The Brief must never ship a category in the Target-user field.
+- **Named user (Stage 3):** if after two pushes you still have a category, do not accept it. Co-create a concrete named persona from their answers ("Let's pin this to one person — a solo freelance designer with 5 clients, call her Priya. Object if that's wrong.") and confirm. The Brief must never ship a category in the Target-user field. Mark a co-created persona **(provisional — not yet validated)** in the Brief, and make finding 2 real people who match it part of the validation assignment.
 - **Wedge (Stage 5):** the two-push cap does not apply. A wedge that is still multiple features is not an acceptable "best answer" — keep cutting until it passes the smallness test.
 
 ## The "skip" / "just write it" hatch
@@ -90,9 +90,9 @@ After the grilling, give a one-line read: the single most revealing thing they s
 
 ### Stage 4 — Landscape
 
-**You MUST actually run the web search tool before listing anything — do not list from memory.** Find **3 real existing solutions**, each with a source link or product URL. List them with one line each.
+**You MUST actually run the web search tool before listing anything — do not list from memory.** Find **3 source-backed existing solutions**, each with a **URL**. List them one line each. Treat them as leads, not verified facts — and **carry the URL for each into the brief's Landscape section** so participants can check them later.
 
-Then say, explicitly: "These are from a web search and may be wrong or out of date — confirm they're real and current before trusting them." Invite a sanity-check.
+Then say, explicitly: "These are source-backed leads from a web search and may be wrong or out of date — confirm them before relying on them." Invite a sanity-check.
 
 If web search is unavailable, say so plainly and label the three as "unverified, from memory — treat as leads to check yourself." Never imply a search happened if it did not.
 
@@ -104,7 +104,7 @@ Help them write a **one-sentence differentiator** grounded in the user's worst h
 
 1. **Stretch vision.** "If you had unlimited time and resources, what's the 10x version?" Capture as the North Star.
 2. **Wedge.** "Now the opposite: what's the smallest version that still delivers real value, buildable by a beginner in a few short sessions?"
-3. **Smallness test.** Push to shrink if the wedge requires ANY of: user accounts/login, real-time or live data, a trained model, multi-user/network effects, integrations, or more than ~2 input fields. If they join features with "and" ("invoicing AND tax"), reject it: "That's two products — which single hand-off do we collapse?" Aim for one input, one output, one screen. Keep cutting until it passes.
+3. **Smallness test.** Push to shrink if the wedge requires ANY of: user accounts/login, real-time or live data, a trained model, multi-user/network effects, integrations, or more than ~2 input fields. If they join features with "and" ("invoicing AND tax"), reject it: "That's two products — which single hand-off do we collapse?" Also check the **output**: if the wedge produces several independent sections (e.g. "themes + quotes + actions"), cut to the single most useful one — unless those sections are genuinely inseparable (e.g. the items of one list). Aim for one input, one output, one screen. Keep cutting until it passes.
 4. **Riskiest assumption.** State the one belief that, if wrong, sinks the wedge — derive it from the weakest evidence in the conversation (if demand was "unproven," the riskiest assumption IS the demand premise). Confirm it with the participant.
 
 *(Teaches: divergent↔convergent + constraint prompting.)*
@@ -113,7 +113,7 @@ Help them write a **one-sentence differentiator** grounded in the user's worst h
 
 Read the template at `reference/research-brief-template.md` relative to this skill's own directory — do NOT read from the participant's working directory. If running in Claude Code and `${CLAUDE_PLUGIN_ROOT}` is available, `${CLAUDE_PLUGIN_ROOT}/skills/ideation/reference/research-brief-template.md` is the same template.
 
-Fill every field from the conversation (coin a short working name if they haven't given one). **Write the result to `research-brief.md` in the participant's current working directory** (not the skill directory). If `research-brief.md` already exists, confirm before overwriting.
+Fill every field from the conversation (coin a short working name if they haven't given one). Carry the competitor **URLs** into the Landscape section, mark any **co-created persona as provisional**, and fill the **Next validation assignment** (who to ask · what to test · what signal confirms or kills it) so the assignment lives in the artifact, not just the chat. **Write the result to `research-brief.md` in the participant's current working directory** (not the skill directory). If `research-brief.md` already exists, confirm before overwriting.
 
 Show it back and ask if anything is wrong; fix it if so.
 
@@ -137,7 +137,7 @@ Record which unlocks were done in the Brief's footer.
 ### Stage 8 — Close
 
 - **What I noticed.** Two sentences reflecting the genuine strengths of their idea and thinking (specific, not flattery).
-- **The assignment.** Give one concrete next action for before Session 2: get one real-world signal on their **riskiest assumption** — message 2 people who match their named user, or find a real user review of a competitor that confirms or kills the premise.
+- **The assignment.** Read out the **Next validation assignment** you just wrote into the brief: get one real-world signal on their **riskiest assumption** — message 2 people who match their named user (or, if the persona is provisional, find 2 real matches), or find a real user review of a competitor that confirms or kills the premise.
 - Point them to their `research-brief.md` and tell them it's the input to Session 2 (Design & Visualize in Claude Design).
 
 ---
