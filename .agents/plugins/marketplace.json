@@ -1,0 +1,20 @@
+{
+  "name": "tumo-ai-workshop",
+  "interface": {
+    "displayName": "TUMO AI Workshop"
+  },
+  "plugins": [
+    {
+      "name": "idea-to-prototype",
+      "source": {
+        "source": "local",
+        "path": "./plugins/idea-to-prototype"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Education"
+    }
+  ]
+}

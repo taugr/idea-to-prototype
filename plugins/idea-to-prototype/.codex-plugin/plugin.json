@@ -1,0 +1,28 @@
+{
+  "name": "idea-to-prototype",
+  "version": "0.1.0",
+  "description": "Workshop ideation skill: rigorous idea discovery that produces a Research Brief",
+  "author": {
+    "name": "Tom Auger",
+    "email": "thomas.auger@tumo.org"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "From Idea to Prototype",
+    "shortDescription": "Session 1 ideation for the TUMO Labs workshop.",
+    "longDescription": "A rigorous AI thinking-partner that pressure-tests a product idea, researches the landscape, narrows it to a buildable wedge, and writes a Research Brief for the next workshop session.",
+    "developerName": "TUMO Labs",
+    "category": "Education",
+    "capabilities": [
+      "Interactive",
+      "Research",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use ideation to sharpen my product idea.",
+      "Help me find a buildable workshop idea.",
+      "Pressure-test my idea and write the brief."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

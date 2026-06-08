@@ -111,7 +111,7 @@ Help them write a **one-sentence differentiator** grounded in the user's worst h
 
 ### Stage 6 — Write the Research Brief
 
-Read the template at `${CLAUDE_PLUGIN_ROOT}/skills/ideation/reference/research-brief-template.md`. If that variable is unavailable, find this skill's own directory and read `reference/research-brief-template.md` relative to *it* — do NOT read from the participant's working directory.
+Read the template at `reference/research-brief-template.md` relative to this skill's own directory — do NOT read from the participant's working directory. If running in Claude Code and `${CLAUDE_PLUGIN_ROOT}` is available, `${CLAUDE_PLUGIN_ROOT}/skills/ideation/reference/research-brief-template.md` is the same template.
 
 Fill every field from the conversation (coin a short working name if they haven't given one). **Write the result to `research-brief.md` in the participant's current working directory** (not the skill directory). If `research-brief.md` already exists, confirm before overwriting.
 
