@@ -1,0 +1,19 @@
+{
+  "name": "tumo-ai-workshop",
+  "owner": {
+    "name": "Tom Auger",
+    "email": "thomas.auger@tumo.org"
+  },
+  "description": "Plugins for the 'From Idea to Prototype' workshop",
+  "plugins": [
+    {
+      "name": "idea-to-prototype",
+      "source": "./plugins/idea-to-prototype",
+      "description": "Session 1 ideation: a rigorous AI thinking-partner that grills your idea and writes a Research Brief",
+      "version": "0.1.0",
+      "author": {
+        "name": "Tom Auger"
+      }
+    }
+  ]
+}

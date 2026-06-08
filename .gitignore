@@ -1,0 +1,8 @@
+# Local tooling state
+.gstack/
+
+# Class notes & planning docs — kept untracked until the workshop ends,
+# then published. Add any further notes here in the meantime.
+document.md
+session-1.md
+session-1-slides.md
