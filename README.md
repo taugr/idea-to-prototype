@@ -11,8 +11,12 @@ Two marketplace files listing the same plugin:
 - `.claude-plugin/marketplace.json` for Claude Code
 - `.agents/plugins/marketplace.json` for Codex
 
-- **`idea-to-prototype`** — the workshop plugin. It currently contains:
-  - **`ideation`** skill (Session 1): a rigorous AI thinking-partner that grills your idea for specificity and evidence, researches the landscape, narrows it to a buildable wedge, and writes a **Research Brief** you carry into the later sessions. It pushes for a *named* user and real demand evidence, and never writes code — its only output is the Brief.
+- **`idea-to-prototype`** — the workshop plugin. It contains:
+  - **`ideation`** (Session 1): a rigorous AI thinking-partner that grills your idea for specificity and evidence, researches the landscape, narrows it to a buildable wedge, and writes a **Research Brief** you carry into the later sessions. It pushes for a *named* user and real demand evidence, and never writes code — its only output is the Brief.
+  - **`setup-check`** (before Session 3): verifies your machine has the build tools — Node.js, npm, git, and a configured git identity — and guides installing anything missing. Read-only; never changes anything without asking.
+  - **`build`** (Session 3): turns your Claude Design handoff into a running **Next.js** app configured for static export (GitHub-Pages-ready), porting the design faithfully and getting the first screen rendering.
+  - **`deploy`** (Session 4): publishes your static prototype to a live **GitHub Pages** URL — connects/creates the repo, sets Pages-safe config, adds a deploy workflow, and pushes. Confirms before any remote or public action.
+  - **`add-ai`** (optional "go live"): makes **one** faked feature real by calling the Claude API directly from the browser with a key you **paste at runtime** (stored in the browser, never committed). Keeps the static, no-backend architecture; always keeps a mock fallback so the site still works without a key.
 
 ## Requirements
 
@@ -20,6 +24,7 @@ Two marketplace files listing the same plugin:
 - [Codex](https://developers.openai.com/codex)
 - A paid Claude or ChatGPT plan with access to the tool you are using
 - Web search enabled (the ideation skill researches the competitive landscape)
+- *(Optional, only for the `add-ai` "go live" step)* an [Anthropic API key](https://console.anthropic.com) — use a dedicated, spend-capped key and revoke it after the workshop
 
 ## Install in Claude Code
 
