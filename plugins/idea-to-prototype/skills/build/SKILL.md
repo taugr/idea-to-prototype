@@ -48,6 +48,18 @@ Confirm **Node ≥ 20** (`node -v`), npm, and git are present. If anything's mis
 
 9. **Close.** Confirm it runs. Note that Session 4 makes the workflow real and sets up the GitHub Pages deploy.
 
+## Updating from a refined handoff
+
+If they go back to Claude Design, refine, and re-export, **update the existing app in place — do NOT scaffold again.** Re-scaffolding discards their navigation, any `add-ai` wiring, fixes, and commits.
+
+1. **Commit first** — restore point, and it makes the update reviewable: `git add -A && git commit -m "before design refresh"`.
+2. **Unzip the new export** into a fresh folder (e.g. `unzip handoff-v2.zip -d handoff-v2/`). Claude Design re-exports the **whole** project, not a diff.
+3. **Re-port the changes into the existing files** — don't recreate the project. Compare the new `.jsx`/CSS against the current ported screens and edit in place to match: update markup and styles, but **keep the project structure, routes, `next.config`, the `"use client"` lines, and any `add-ai` wiring intact.**
+4. **Handle added/removed screens.** If the refine added a screen, port it as a new component (and a route if it's navigable); if one was dropped, remove it. Ask them what changed if it isn't obvious from the diff.
+5. **Run + commit.** `npm run dev`, confirm the refreshed screens render, then commit again.
+
+**Exception:** if they've barely started (just scaffolded, nothing built on top), re-running the fresh scaffold in a clean folder is simpler — only do the in-place update once there's work worth preserving.
+
 ## Hard rules
 
 - **Static-export-safe ONLY:** no API routes, no server actions, no `getServerSideProps`, no runtime secrets, no database, no `[param]` dynamic routes. Everything client-side or mocked.
