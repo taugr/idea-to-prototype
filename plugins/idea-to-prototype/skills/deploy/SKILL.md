@@ -18,9 +18,9 @@ Assumes the project is the **Next.js app from the `build` skill** (it runs local
 
 1. **Confirm it runs locally** first (`npm run dev`). Don't deploy something that doesn't build.
 
-2. **Deploy** (confirm — this publishes their app). From the project folder:
-   `npx vercel --yes`
-   The first run links/creates the project (the defaults are fine) and returns a deployment URL. Vercel auto-detects Next.js and builds it.
+2. **Deploy to production** (confirm — this publishes their app). From the project folder:
+   `npx vercel --prod --yes`
+   The first run links/creates the project (defaults are fine); Vercel auto-detects Next.js and builds it. **Always pass `--prod`** so the **live** URL updates — a plain `npx vercel` only makes a throwaway preview deployment with its own temporary URL, which confuses people ("my site didn't change"). Every later run redeploys the **same** project and updates the **same** live URL (see "Publishing later changes").
 
 3. **If the app has a server route that needs a secret** (the `ANTHROPIC_API_KEY` from `add-ai`): the key is **not** in the code — set it on Vercel, then redeploy so it takes effect.
    - `npx vercel env add ANTHROPIC_API_KEY production` → paste the key when prompted (the facilitator's shared, capped key).
@@ -33,11 +33,20 @@ Assumes the project is the **Next.js app from the `build` skill** (it runs local
 
 5. **Give them the live URL** and have them open it in a **fresh/incognito browser** to confirm it loads with no login. If they set a key, run the real feature end-to-end on the live site.
 
+## Publishing later changes
+
+There's no auto-deploy — whenever they change the code and want it live again, **re-run the deploy**:
+- `npx vercel --prod --yes` (or just re-run `/idea-to-prototype:deploy`).
+- It detects the existing project via the hidden `.vercel/` link and **updates the same live URL** — no new project, no new URL. (Vercel created `.vercel/` on the first deploy; it stays on their machine.)
+- **Env vars persist** across deploys — they don't re-enter the key. (Only if they *change* a var does this redeploy apply it.)
+- Remind them to **`git commit`** too: committing is their local restore point; `npx vercel --prod` is what the public sees — two separate steps.
+
 ## Hard rules
 
 - **Confirm before every public/account action:** deploying, `vercel login`, `vercel env add`, and changing Deployment Protection. Show the exact command/step first.
 - **Never commit secrets or API keys.** The key lives only in Vercel's env vars and in local `.env.local` (gitignored) — never in the code or a committed file. If you spot a key in the source or a commit, stop and remove it.
 - **Set the key on Vercel, not in the code** — `vercel env add` + redeploy. Don't hardcode it or bake it into the build.
+- **Always deploy with `--prod`** (first run and every re-run) so the live URL updates; a plain `vercel` makes a preview that doesn't change the shared URL.
 - Keep changes minimal — deploy/config only; do not refactor the app.
 - If `vercel login` is needed, let them do the browser step; don't improvise auth.
 - **"Authentication Required" on the live URL?** That's Deployment Protection still on — fix it in Settings (step 4), not in the code.
