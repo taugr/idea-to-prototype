@@ -1,87 +1,44 @@
 ---
 name: deploy
-description: Deploy the participant's Next.js static-export prototype to GitHub Pages — connect/create a repo, configure Pages-safe settings, add a deploy workflow, push, and return the live URL. Workshop Session 4. Beginner-safe; confirms before every remote or public action.
+description: Deploy the participant's Next.js app to a live Vercel URL — sign in the Vercel CLI, deploy, set any server-side env vars (like the AI key) and redeploy, turn off Deployment Protection so the URL is public, and return the live link. Workshop Session 4. Beginner-safe; confirms before every public or account action.
 ---
 
-# Deploy
+# Deploy (Vercel)
 
-You publish the participant's prototype to **GitHub Pages** so it has a live URL. The participant is a non-developer; explain plainly and **always confirm before any action that touches their GitHub account or makes something public** (creating a repo, pushing, changing repo settings).
+You publish the participant's app to **Vercel** so it has a live URL — and, if they added a server feature (the API route from `/idea-to-prototype:add-ai`), so that backend runs for real with the key kept server-side. The participant is a non-developer; explain plainly and **confirm before anything public or account-touching** (deploying, signing in, setting env vars, changing project settings).
 
-Assumes the project is the **Next.js static-export app from the `build` skill** (committed, with `package-lock.json`). If it isn't, tell them to run `/idea-to-prototype:build` first.
+Assumes the project is the **Next.js app from the `build` skill** (it runs locally). Deploy works whether or not it has a backend route. No GitHub repo is required — the Vercel CLI uploads the project directly.
 
 ## Preconditions
 
-Check: `git --version`, `git config user.name/email`, and **GitHub auth** with `gh auth status`. If `gh` isn't authenticated, explain you'll sign them in and run `gh auth login` (browser flow) **after they say go**. If `gh` isn't installed, route them to `/idea-to-prototype:setup-check`.
+- **Node + npm** (the CLI runs via `npx vercel`). If missing, route to `/idea-to-prototype:setup-check`.
+- **A Vercel account, signed in.** Check with `npx vercel whoami`. If it errors or is blank, tell them you'll sign them in and run **`npx vercel login`** (a browser/email flow) **after they say go** — account sign-in is theirs to approve. They can sign up with their GitHub login in one click.
 
 ## Flow
 
-1. **Confirm static-export-ready.** `next.config` has `output: 'export'` and `images.unoptimized: true`; `public/.nojekyll` exists.
+1. **Confirm it runs locally** first (`npm run dev`). Don't deploy something that doesn't build.
 
-2. **Repo — check what already exists first.** Run `git remote -v`.
-   - **`origin` already set** → don't create anything; confirm the URL and skip to step 3.
-   - **They have a GitHub repo but no remote** → `git remote add origin <url>` (confirm).
-   - **No repo at all** → ask for a name, confirm it'll be **public** (free Pages needs public), and create it **without pushing yet**:
-     `gh repo create <name> --public --source=. --remote=origin`
-     *(Creating the repo is a remote/public action — confirm first.)*
-   - **If they insist on a private repo:** tell them GitHub Pages won't publish from a private repo on the free plan — offer public, or stop. Never run `--private` expecting Pages to work.
+2. **Deploy** (confirm — this publishes their app). From the project folder:
+   `npx vercel --yes`
+   The first run links/creates the project (the defaults are fine) and returns a deployment URL. Vercel auto-detects Next.js and builds it.
 
-3. **Pages-safe basePath (substitute the REAL repo name).** A project site serves at `https://<user>.github.io/<repo>/`, so the build needs a basePath — but only in the deployed build. In `next.config`, replace `<repo>` with the actual repo name from step 2:
-   ```js
-   const repo = 'YOUR-REPO-NAME'  // must exactly match the GitHub repo
-   const isProd = process.env.NODE_ENV === 'production'
-   const nextConfig = {
-     output: 'export',
-     images: { unoptimized: true },
-     trailingSlash: true,
-     basePath: isProd ? `/${repo}` : '',
-   }
-   ```
-   Do **not** add `assetPrefix` — `basePath` already handles `_next/`. Note for them: if they ever preview the built `out/` locally it'll look broken (assets point at `/<repo>/`) — that's expected; it's correct on Pages. Files referenced from `public/` (like `/logo.png`) need the `/<repo>` prefix on Pages, so prefer inline/imported assets.
+3. **If the app has a server route that needs a secret** (the `ANTHROPIC_API_KEY` from `add-ai`): the key is **not** in the code — set it on Vercel, then redeploy so it takes effect.
+   - `npx vercel env add ANTHROPIC_API_KEY production` → paste the key when prompted (the facilitator's shared, capped key).
+   - **Redeploy** so the new var is picked up: `npx vercel --prod --yes`. *(Env-var changes only apply to deployments created **after** they're added — the redeploy is required, and "I set the key but it still fails" is almost always a missing redeploy.)*
+   - If the app has no backend route, skip this step.
 
-4. **Branch = main.** `git branch -M main` (so the workflow's `on: push: [main]` actually triggers — `git init` on older git defaults to `master`).
+4. **Make the URL public — turn off Deployment Protection.** By default a deployment can be gated behind a **Vercel login wall**: the live URL shows "Authentication Required" to everyone, including demo-day visitors. For a public prototype, turn it off (confirm — it's a settings change):
+   **vercel.com → the project → Settings → Deployment Protection → Vercel Authentication → Disabled → Save.**
+   Then the URL is open to anyone. *(If they truly want it private, leave it on — but then only logged-in collaborators can see it, which is rarely what a demo wants.)*
 
-5. **Add the deploy workflow** at `.github/workflows/deploy.yml`:
-   ```yaml
-   name: Deploy to GitHub Pages
-   on:
-     push: { branches: [main] }
-   permissions:
-     contents: read
-     pages: write
-     id-token: write
-   jobs:
-     build:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v4
-         - uses: actions/setup-node@v4
-           with: { node-version: 20 }
-         - run: npm install
-         - run: npm run build
-         - uses: actions/configure-pages@v5
-           with: { enablement: true }
-         - uses: actions/upload-pages-artifact@v3
-           with: { path: ./out }
-     deploy:
-       needs: build
-       runs-on: ubuntu-latest
-       environment: { name: github-pages, url: "${{ steps.deployment.outputs.page_url }}" }
-       steps:
-         - id: deployment
-           uses: actions/deploy-pages@v4
-   ```
-
-6. **No manual Pages toggle.** The workflow self-enables Pages via `configure-pages`'s `enablement: true` on its first run — so just commit and push. *(You can't pre-enable Pages on a fresh empty repo anyway; the API 404s until there's content, which is why we let the workflow turn it on after the push. Verified live. If your org blocks auto-enablement, enable it once in **Settings → Pages → Source: GitHub Actions** and re-run the workflow.)*
-
-7. **Commit + push** (confirm — this is the first push): `git add -A && git commit -m "Add Pages deploy" && git push -u origin main`. The push triggers the workflow, which enables Pages and deploys.
-
-8. **Give them the URL.** `https://<user>.github.io/<repo>/` (the user part is **lowercased**). First deploy takes ~1–2 min (longer on a brand-new account) — watch the **Actions** tab; refresh the URL once the run is green.
+5. **Give them the live URL** and have them open it in a **fresh/incognito browser** to confirm it loads with no login. If they set a key, run the real feature end-to-end on the live site.
 
 ## Hard rules
 
-- **Confirm before every remote/public action:** creating a repo, the first push, and changing Pages settings. Show the exact command first.
-- **Never commit secrets or API keys.** This is a public static site. (If they later wire real AI via `/idea-to-prototype:add-ai`, the participant pastes their key in the browser at runtime — it still must never be committed or baked into the build.)
-- Keep changes minimal — config + workflow + branch only; do not refactor the app.
-- If `gh` auth or install is missing, route to `/idea-to-prototype:setup-check`; don't improvise auth.
-- **Blank page after deploy?** Open browser devtools → Network. If assets request `/<file>` (404) instead of `/<repo>/<file>`, the basePath is wrong — check `const repo` exactly matches the repo name. Fix that, don't rebuild the app.
-- If the workflow fails, read the Actions log and fix the smallest thing (usually basePath, the branch, or a build error); push again.
+- **Confirm before every public/account action:** deploying, `vercel login`, `vercel env add`, and changing Deployment Protection. Show the exact command/step first.
+- **Never commit secrets or API keys.** The key lives only in Vercel's env vars and in local `.env.local` (gitignored) — never in the code or a committed file. If you spot a key in the source or a commit, stop and remove it.
+- **Set the key on Vercel, not in the code** — `vercel env add` + redeploy. Don't hardcode it or bake it into the build.
+- Keep changes minimal — deploy/config only; do not refactor the app.
+- If `vercel login` is needed, let them do the browser step; don't improvise auth.
+- **"Authentication Required" on the live URL?** That's Deployment Protection still on — fix it in Settings (step 4), not in the code.
+- **AI feature failing on the live site?** Check, in order: env var set for the **production** environment, **redeployed after** adding it, and the key valid/under its limit. The route returns a clean error message — read it.

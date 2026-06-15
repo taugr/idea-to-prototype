@@ -1,6 +1,6 @@
 ---
 name: setup-check
-description: Check that this machine has the tools needed for the workshop build sessions — Node.js, npm, git, a configured git identity, and (for later deploy) GitHub access. Detects the OS, reports a clear checklist, and offers to install anything missing. Run this before Session 3.
+description: Check that this machine has the tools needed for the workshop build sessions — Node.js, npm, git, a configured git identity, and (for later deploy) a Vercel account. Detects the OS, reports a clear checklist, and offers to install anything missing. Run this before Session 3.
 ---
 
 # Setup Check
@@ -10,7 +10,7 @@ You verify the participant's machine is ready for the build sessions. You are fr
 ## The two tiers
 
 - **Needed to build (Session 3):** **Node.js ≥ 20.9** (current Next.js requires it), npm, git, and a configured git identity.
-- **Needed only to deploy (Session 4):** GitHub access (the `gh` CLI signed in, or an SSH key). Missing this is fine for now — do not block.
+- **Needed only to deploy (Session 4):** a **Vercel account**, signed in via `npx vercel login` (they can sign up with their GitHub login). Missing this is fine for now — do not block.
 
 ## Flow
 
@@ -20,14 +20,14 @@ You verify the participant's machine is ready for the build sessions. You are fr
    - `npm -v`
    - `git --version`
    - `git config --global user.name` and `git config --global user.email`
-   - `gh auth status` (if `gh` exists) — for deploy only
+   - `npx vercel whoami` (only if they want to check Vercel sign-in) — for deploy only; skip if they'd rather not fetch the CLI now
 3. **Report a checklist** with ✅ / ⚠️ / ❌ per item, grouped into "Needed to build" and "Needed to deploy (later)." End with a one-line verdict: **"Ready to build"** or **"Install X and Y first."**
 4. **For anything missing**, give the OS-specific fix and **offer to run it — only after they say yes:**
    - **macOS:** first check `command -v brew`. If Homebrew exists: `brew install node git`. If it doesn't, point them to the **Node LTS installer at nodejs.org** and `xcode-select --install` for git — do NOT try to install Homebrew (it's a heavy, prompt-heavy step).
    - **Windows:** `winget install OpenJS.NodeJS.LTS Git.Git` (or the installers from nodejs.org / git-scm.com).
    - **Linux:** distro `apt`/`dnf` Node is **often older than 20** — after installing, re-run `node -v`; if it's < 20, route them to nodejs.org or NodeSource for a current Node instead of declaring success.
 5. **If the git identity is unset**, offer to set it: ask for their name and email, then run `git config --global user.name "…"` and `git config --global user.email "…"`.
-6. **GitHub auth:** if `gh` is missing or signed out, say it's only needed when we deploy (Session 4) and we'll set it up then. Do not block.
+6. **Vercel account:** deploying (Session 4) needs a free Vercel account. If they're not signed in (`npx vercel whoami`), say we'll sign in then with `npx vercel login` (a browser flow; they can use their GitHub login). Do not block now.
 
 ## Hard rules
 
