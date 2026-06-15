@@ -72,7 +72,7 @@ After the prototype runs (`/idea-to-prototype:build`). Pick the **one feature th
 
 6. **Test the wiring locally — with the mock first (no key needed).** `npm run dev`, trigger the feature with no key set: the route returns a clean error and the front-end shows the **mock**. This confirms the route + fallback work before any key is involved.
 
-7. **Deploy and set the key — one place, on Vercel.** Run `/idea-to-prototype:deploy`. It sets the key **once** as a Vercel env var (`npx vercel env add ANTHROPIC_API_KEY production`) and redeploys. The live site's route now calls Claude; the key never reaches the browser.
+7. **Deploy and set the key — one place, on Vercel.** Run `/idea-to-prototype:deploy`. It sets the key **once** on Vercel — easiest on the **Vercel website** (Settings → Environment Variables → add `ANTHROPIC_API_KEY`), or via `npx vercel env add` — then redeploys. The live site's route now calls Claude; the key never reaches the browser.
 
 8. **(Optional) real AI in local dev too.** Rather than re-typing the key, **pull it down** from Vercel after deploying:
    ```

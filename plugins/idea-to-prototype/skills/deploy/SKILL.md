@@ -23,8 +23,9 @@ Assumes the project is the **Next.js app from the `build` skill** (it runs local
    The first run links/creates the project (defaults are fine); Vercel auto-detects Next.js and builds it. **Always pass `--prod`** so the **live** URL updates — a plain `npx vercel` only makes a throwaway preview deployment with its own temporary URL, which confuses people ("my site didn't change"). Every later run redeploys the **same** project and updates the **same** live URL (see "Publishing later changes").
 
 3. **If the app has a server route that needs a secret** (the `ANTHROPIC_API_KEY` from `add-ai`): the key is **not** in the code — set it on Vercel, then redeploy so it takes effect.
-   - `npx vercel env add ANTHROPIC_API_KEY production` → paste the key when prompted (the facilitator's shared, capped key).
-   - **Redeploy** so the new var is picked up: `npx vercel --prod --yes`. *(Env-var changes only apply to deployments created **after** they're added — the redeploy is required, and "I set the key but it still fails" is almost always a missing redeploy.)*
+   - **Set the key on the Vercel website (recommended — cleanest, works in any setup):** vercel.com → the project → **Settings → Environment Variables** → add `ANTHROPIC_API_KEY` = the facilitator's shared, capped key, Environment: **Production** → **Save**. The student enters their own secret in the dashboard — no terminal prompt.
+   - *Or in the terminal:* `npx vercel env add ANTHROPIC_API_KEY production` → paste the key at the prompt.
+   - **Redeploy** so the new var is picked up: `npx vercel --prod --yes` (or "Redeploy" from the dashboard). *(Env-var changes only apply to deployments created **after** they're added — the redeploy is required, and "I set the key but it still fails" is almost always a missing redeploy.)*
    - **(Optional) sync the key to local dev** — so `npm run dev` uses the real model too, pull it down instead of re-typing it: `npx vercel env pull .env.local --environment=production`. Vercel is the **one place** the key is entered; local follows. `.env.local` is gitignored — never commit it.
    - If the app has no backend route, skip this step.
 
