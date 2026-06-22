@@ -17,6 +17,7 @@ Two marketplace files listing the same plugin:
   - **`build`** (Session 3): turns your Claude Design handoff into a running **Next.js** app configured for static export (GitHub-Pages-ready), porting the design faithfully and getting the first screen rendering.
   - **`deploy`** (Session 4): deploys your app to a live **Vercel** URL — signs in the Vercel CLI, deploys, sets any server-side env vars (like the AI key) and redeploys, and turns off Deployment Protection so the URL is public. Confirms before any public or account action.
   - **`add-ai`** (optional "go live"): makes **one** faked feature real with a small **server API route** on Vercel; the Claude key stays **server-side** as an environment variable — never in the browser or the repo. Always keeps a mock fallback so the app still works without a key.
+  - **`pitch`** (Session 5): turns your working prototype into a **pitch deck + demo script** — a coached, four-step flow you direct: capture screenshots into a `pitch/` folder, outline the story, generate a `.pptx` with the screenshots embedded, and draft a 2-minute demo script. Pauses at each step for your review.
 
 ## Requirements
 
